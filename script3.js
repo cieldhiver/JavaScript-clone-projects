@@ -15,7 +15,7 @@ const btnHold = document.querySelector('.btn--hold');
 
 let scores, currentScore, activePlayer, playing;
 
-// Starting conditions
+//시작 조건
 const init = function () {
   scores = [0, 0];
   currentScore = 0;
@@ -43,25 +43,25 @@ const switchPlayer = function () {
   player1El.classList.toggle('player--active');
 };
 
-// Rolling dice functionality
+// 주사위 기능 작동
 btnRoll.addEventListener('click', function () {
   if (playing) {
-    // 1. Generating a random dice roll
+    // 1. 랜덤 주사위 굴리기
     const dice = Math.trunc(Math.random() * 6) + 1;
 
-    // 2. Display dice
+    // 2. 주사위 나타나게
     diceEl.classList.remove('hidden');
     diceEl.src = `dice-${dice}.png`;
 
-    // 3. Check for rolled 1
+    // 3. 1이 나오는지 확인
     if (dice !== 1) {
-      // Add dice to current score
+      // 현재 스코어에 주사위 숫자를 더한다.
+      //currentScore = currentScore + dice;
       currentScore += dice;
-      document.getElementById(
-        `current--${activePlayer}`
-      ).textContent = currentScore;
+      document.getElementById(`current--${activePlayer}`).textContent =
+        currentScore;
     } else {
-      // Switch to next player
+      // 다른 플레이어로 변경
       switchPlayer();
     }
   }
@@ -69,16 +69,16 @@ btnRoll.addEventListener('click', function () {
 
 btnHold.addEventListener('click', function () {
   if (playing) {
-    // 1. Add current score to active player's score
+    // 1. 현재 점수를 현재 플레이어의 점수와 더한다
     scores[activePlayer] += currentScore;
     // scores[1] = scores[1] + currentScore
 
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
 
-    // 2. Check if player's score is >= 100
+    // 2. 플레이어의 점수가 100보다 크거나 같은 경우
     if (scores[activePlayer] >= 100) {
-      // Finish the game
+      // 게임 종료
       playing = false;
       diceEl.classList.add('hidden');
 
@@ -89,7 +89,7 @@ btnHold.addEventListener('click', function () {
         .querySelector(`.player--${activePlayer}`)
         .classList.remove('player--active');
     } else {
-      // Switch to the next player
+      // 다른 플레이어로 변경
       switchPlayer();
     }
   }
